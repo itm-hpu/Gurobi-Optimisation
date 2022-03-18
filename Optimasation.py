@@ -1,8 +1,11 @@
 import numpy as np
 import gurobipy as gp
 
-# CASO 1
-
+#CASO 1
+'''
+psoition of pickup and delivery points
+The modification is needed since the original distance is represented by the time matrix
+'''
 NS = np.array([25, 10])
 NA = np.array([0, 0])
 NB = np.array([10, 0])
@@ -10,8 +13,13 @@ NC = np.array([0, 10])
 ND = np.array([10, 15])
 NE = np.array([25, -10])
 
+'''
+descibe the task using the mapping of two loc[] and 'd' is se
+The modification is needed since the original position points are different.
+'''
+
 loc = {}
-d = {}  # Set of demands, q in the model
+d = {} #Set of demands, q in the model
 loc[0] = NS
 loc[1] = NA
 loc[2] = NC
@@ -44,7 +52,10 @@ d[11] = -1
 d[12] = -1
 d[13] = 0
 
-n = 6  # Number of jobs
+n = 6 #Number of jobs
+'''
+descibe the sets of the pickup and delivery points
+'''
 P = [i for i in range(1, n + 1)]  # Set of pickup nodes
 D = [i for i in range(n + 1, 2 * n + 1)]  # Set opf delivery nodes
 S = range(50)  # Set of scenarios
@@ -52,22 +63,141 @@ V = [0] + P + D + [2 * n + 1]  # Set N from the paper
 
 M = 1000  # Big M
 ex = 0
-
+'''
+descibe the time of the pickup points at cycles 1 to 10 
+'''
 a = {}  # Pickup times, e in the model from paper
-a[1] = 10
-a[2] = 20
-a[3] = 10
-a[4] = 20
-a[5] = 40
-a[6] = 20
+a[1] = 0
+a[2] = 80
+a[3] = 0
+a[4] = 100
+a[5] = 100
+
+a[6] = 400
+a[7] = 500
+a[8] = 400
+a[9] = 450
+a[10] = 500
+
+a[11] = 820
+a[12] = 800
+a[13] = 800
+a[14] = 850
+a[15] = 950
+
+a[16] = 1200
+a[17] = 1350
+a[18] = 1200
+a[19] = 1200
+a[20] = 1300
+
+a[21] = 1610
+a[22] = 1700
+a[23] = 1600
+a[24] = 1680
+a[25] = 1770
+
+a[26] = 2010
+a[27] = 2050
+a[28] = 2000
+a[29] = 2100
+a[30] = 2100
+
+a[31] = 2400
+a[32] = 2430
+a[33] = 2400
+a[34] = 2470
+a[35] = 2570
+
+a[36] = 2800
+a[37] = 2870
+a[38] = 2800
+a[39] = 2950
+a[40] = 2900
+
+a[41] = 3200
+a[42] = 3210
+a[43] = 3200
+a[44] = 3370
+a[45] = 3300
+
+a[46] = 3630
+a[47] = 3600
+a[48] = 3600
+a[49] = 3700
+a[50] = 3750
+
+'''
+descibe the time of the delivery points at cycles 1 to 10
+'''
+a[51] = 230
+a[52] = 310
+a[53] = 400
+a[54] = 330
+a[55] = 330
+
+a[56] = 630
+a[57] = 730
+a[58] = 800
+a[59] = 680
+a[60] = 730
+
+a[61] = 1050
+a[62] = 1030
+a[63] = 1200
+a[64] = 1080
+a[65] = 1180
+
+a[66] = 1430
+a[67] = 1580
+a[68] = 1600
+a[69] = 1430
+a[70] = 1530
+
+a[71] = 1840
+a[72] = 1930
+a[73] = 2000
+a[74] = 1910
+a[75] = 2000
+
+a[76] = 2240
+a[77] = 2280
+a[78] = 2400
+a[79] = 2330
+a[80] = 2330
+
+a[81] = 2630
+a[82] = 2660
+a[83] = 2800
+a[84] = 2700
+a[85] = 2800
+
+a[86] = 3030
+a[87] = 3100
+a[88] = 3200
+a[89] = 3180
+a[90] = 3130
+
+a[91] = 3430
+a[92] = 3440
+a[93] = 3600
+a[94] = 3600
+a[95] = 3530
+
+a[96] = 3860
+a[97] = 3830
+a[98] = 4000
+a[99] = 3930
+a[100] = 3980
+
 
 for i in V:
     if i not in P:
         a[i] = 0
 
 b = {}  # Delivery times, l in the model from paper
-b[7] = 40 + ex
-b[8] = 55 + ex
+b[7] = 30 + ex
+b[8] = 50 + ex
 b[9] = 60 + ex
 b[10] = 90 + ex
 b[11] = 90 + ex
@@ -98,6 +228,10 @@ K = range(2)  # Set of AGV available
 Cap = {}
 for k in K:
     Cap[k] = 1
+'''
+Using gurobi optimisation for the output the optimal results
+'''
+
 m = gp.Model()
 m.Params.MIPFocus = 1
 x = m.addVars(K, V, V, vtype = 'B', name = 'x')
@@ -133,6 +267,7 @@ m.setObjective(gp.quicksum(c[i,j] * x[k,i,j] for k in K for i in V for j in V)
              + 1/M * (gp.quicksum(w) + gp.quicksum(q)) + M * gp.quicksum(ms))
 
 m.write('model-pdptw-det.lp')
+
 m.optimize()
 m.write('bots-det_%s_%s.sol' % (n, len(K)))
 for i in gp.tuplelist(ms):
@@ -283,3 +418,4 @@ print("----------------------------")
 for k in K:
     print(order)
 print(gp.quicksum(c[i,j] * x[k,i,j].X for k in K for i in V for j in V))
+
