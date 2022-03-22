@@ -6,12 +6,24 @@ import gurobipy as gp
 psoition of pickup and delivery points
 The modification is needed since the original distance is represented by the time matrix
 '''
-NS = np.array([25, 10])
-NA = np.array([0, 0])
-NB = np.array([10, 0])
-NC = np.array([0, 10])
-ND = np.array([10, 15])
-NE = np.array([25, -10])
+# NS = np.array([25, 10])
+# NA = np.array([0, 0])
+# NB = np.array([10, 0])
+# NC = np.array([0, 10])
+# ND = np.array([10, 15])
+# NE = np.array([25, -10])
+NA=np.array([7.00,10.00])
+NB=np.array([7.20,6.00])
+NC=np.array([9.20,6.00])
+ND=np.array([7.20,7.50])
+NE=np.array([9.20,7.50])
+NF=np.array([7.20,9.00])
+NG=np.array([9.20,9.00])
+NH=np.array([16.00,8.00])
+NI=np.array([15.00,6.00])
+NJ=np.array([13.00,6.60])
+NK=np.array([13.60,9.30])
+NL=np.array([10.60,9.30])
 
 '''
 descibe the task using the mapping of two loc[] and 'd' is se
@@ -20,39 +32,262 @@ The modification is needed since the original position points are different.
 
 loc = {}
 d = {} #Set of demands, q in the model
-loc[0] = NS
-loc[1] = NA
-loc[2] = NC
-loc[3] = NE
-loc[4] = NB
-loc[5] = NC
-loc[6] = NE
 
+'''
+the definition of From Location
+'''
+loc[0]=NA
+loc[1]=NA
+loc[2]=NH
+loc[3]=NK
+loc[4]=NH
+loc[5]=NH
+loc[6]=NC
+loc[7]=NA
+loc[8]=NH
+loc[9]=NH
+loc[10]=NE
+
+loc[11]=NA
+loc[12]=NA
+loc[13]=NA
+loc[14]=NH
+loc[15]=NH
+
+loc[16]=NA
+loc[17]=NC
+loc[18]=NL
+loc[19]=NE
+loc[20]=NG
+
+loc[21]=NH
+loc[22]=NH
+loc[23]=NK
+loc[24]=NH
+loc[25]=NA
+
+loc[26]=NC
+loc[27]=NE
+loc[28]=NI
+loc[29]=NH
+loc[30]=NG
+
+loc[31]=NA
+loc[32]=NA
+loc[33]=NJ
+loc[34]=NH
+loc[35]=NH
+
+loc[36]=NC
+loc[37]=NE
+loc[38]=NL
+loc[39]=NC
+loc[40]=NG
+
+loc[41]=NH
+loc[42]=NH
+loc[43]=NJ
+loc[44]=NH
+loc[45]=NA
+
+loc[46]=NH
+loc[47]=NG
+loc[48]=NI
+loc[49]=NC
+loc[50]=NE
+'''
+define the number of the each task, two nodes connected are defined as a task.
+'''
 d[0] = 0
-d[1] = 1
+d[1] = 0
 d[2] = 1
 d[3] = 1
 d[4] = 1
 d[5] = 1
+
 d[6] = 1
+d[7] = 1
+d[8] = 1
+d[9] = 1
+d[10] = 1
 
-loc[7] = NB
-loc[8] = ND
-loc[9] = NA
-loc[10] = NA
-loc[11] = ND
-loc[12] = NC
-loc[13] = NS
+d[11] = 1
+d[12] = 1
+d[13] = 1
+d[14] = 1
+d[15] = 1
 
-d[7] = -1
-d[8] = -1
-d[9] = -1
-d[10] = -1
-d[11] = -1
-d[12] = -1
-d[13] = 0
+d[16] = 1
+d[17] = 1
+d[18] = 1
+d[19] = 1
+d[20] = 1
 
-n = 6 #Number of jobs
+d[21] = 1
+d[22] = 1
+d[23] = 1
+d[24] = 1
+d[25] = 1
+
+d[26] = 1
+d[27] = 1
+d[28] = 1
+d[29] = 1
+d[30] = 1
+
+d[31] = 1
+d[32] = 1
+d[33] = 1
+d[34] = 1
+d[35] = 1
+
+d[36] = 1
+d[37] = 1
+d[38] = 1
+d[39] = 1
+d[40] = 1
+
+d[41] = 1
+d[42] = 1
+d[43] = 1
+d[44] = 1
+d[45] = 1
+
+d[46] = 1
+d[47] = 1
+d[48] = 1
+d[49] = 1
+d[50] = 1
+
+'''
+the definition of To Location
+'''
+
+loc[51]=NH
+loc[52]=NB
+loc[53]=NJ
+loc[54]=ND
+loc[55]=NF
+
+loc[56]=NA
+loc[57]=NH
+loc[58]=NI
+loc[59]=NF
+loc[60]=NA
+
+loc[61]=NB
+loc[62]=NH
+loc[63]=NI
+loc[64]=NB
+loc[65]=ND
+
+loc[66]=NH
+loc[67]=NA
+loc[68]=NI
+loc[69]=NA
+loc[70]=NA
+
+loc[71]=NB
+loc[72]=ND
+loc[73]=NJ
+loc[74]=NF
+loc[75]=NH
+
+loc[76]=NA
+loc[77]=NA
+loc[78]=NK
+loc[79]=NB
+loc[80]=NA
+
+loc[81]=NH
+loc[82]=NH
+loc[83]=NA
+loc[84]=NB
+loc[85]=ND
+
+loc[86]=NA
+loc[87]=NA
+loc[88]=NK
+loc[89]=NJ
+loc[90]=NA
+
+loc[91]=NB
+loc[92]=NF
+loc[93]=NL
+loc[94]=NF
+loc[95]=NH
+
+loc[96]=ND
+loc[97]=NA
+loc[98]=NL
+loc[99]=NA
+loc[100]=NA
+loc[101] = NA
+'''
+define the number of the each task
+'''
+d[51] = -1
+d[52] = -1
+d[53] = -1
+d[54] = -1
+d[55] = -1
+
+d[56] = -1
+d[57] = -1
+d[58] = -1
+d[59] = -1
+d[60] = -1
+
+d[61] = -1
+d[62] = -1
+d[63] = -1
+d[64] = -1
+d[65] = -1
+
+d[66] = -1
+d[67] = -1
+d[68] = -1
+d[69] = -1
+d[70] = -1
+
+d[71] = -1
+d[72] = -1
+d[73] = -1
+d[74] = -1
+d[75] = -1
+
+d[76] = -1
+d[77] = -1
+d[78] = -1
+d[79] = -1
+d[80] = -1
+
+d[81] = -1
+d[82] = -1
+d[83] = -1
+d[84] = -1
+d[85] = -1
+
+d[86] = -1
+d[87] = -1
+d[88] = -1
+d[89] = -1
+d[90] = -1
+
+d[91] = -1
+d[92] = -1
+d[93] = -1
+d[94] = -1
+d[95] = -1
+
+d[96] = -1
+d[97] = -1
+d[98] = -1
+d[99] = -1
+d[100] = -1
+d[101] = 0
+
+n = 50 #Number of jobs
 '''
 descibe the sets of the pickup and delivery points
 '''
@@ -127,81 +362,73 @@ a[48] = 3600
 a[49] = 3700
 a[50] = 3750
 
-'''
-descibe the time of the delivery points at cycles 1 to 10
-'''
-a[51] = 230
-a[52] = 310
-a[53] = 400
-a[54] = 330
-a[55] = 330
-
-a[56] = 630
-a[57] = 730
-a[58] = 800
-a[59] = 680
-a[60] = 730
-
-a[61] = 1050
-a[62] = 1030
-a[63] = 1200
-a[64] = 1080
-a[65] = 1180
-
-a[66] = 1430
-a[67] = 1580
-a[68] = 1600
-a[69] = 1430
-a[70] = 1530
-
-a[71] = 1840
-a[72] = 1930
-a[73] = 2000
-a[74] = 1910
-a[75] = 2000
-
-a[76] = 2240
-a[77] = 2280
-a[78] = 2400
-a[79] = 2330
-a[80] = 2330
-
-a[81] = 2630
-a[82] = 2660
-a[83] = 2800
-a[84] = 2700
-a[85] = 2800
-
-a[86] = 3030
-a[87] = 3100
-a[88] = 3200
-a[89] = 3180
-a[90] = 3130
-
-a[91] = 3430
-a[92] = 3440
-a[93] = 3600
-a[94] = 3600
-a[95] = 3530
-
-a[96] = 3860
-a[97] = 3830
-a[98] = 4000
-a[99] = 3930
-a[100] = 3980
-
-
 for i in V:
     if i not in P:
         a[i] = 0
 
 b = {}  # Delivery times, l in the model from paper
-b[7] = 30 + ex
-b[8] = 50 + ex
-b[9] = 60 + ex
-b[10] = 90 + ex
-b[11] = 90 + ex
-b[12] = 80 + ex
+'''
+descibe the time of the delivery points at cycles 1 to 10
+'''
+b[51] = 230+ex
+b[52] = 310+ex
+b[53] = 400+ex
+b[54] = 330+ex
+b[55] = 330+ex
+
+b[56] = 630+ex
+b[57] = 730+ex
+b[58] = 800+ex
+b[59] = 680+ex
+b[60] = 730+ex
+
+b[61] = 1050+ex
+b[62] = 1030+ex
+b[63] = 1200+ex
+b[64] = 1080+ex
+b[65] = 1180+ex
+
+b[66] = 1430+ex
+b[67] = 1580+ex
+b[68] = 1600+ex
+b[69] = 1430+ex
+b[70] = 1530+ex
+
+b[71] = 1840+ex
+b[72] = 1930+ex
+b[73] = 2000+ex
+b[74] = 1910+ex
+b[75] = 2000+ex
+
+b[76] = 2240+ex
+b[77] = 2280+ex
+b[78] = 2400+ex
+b[79] = 2330+ex
+b[80] = 2330+ex
+
+b[81] = 2630+ex
+b[82] = 2660+ex
+b[83] = 2800+ex
+b[84] = 2700+ex
+b[85] = 2800+ex
+
+b[86] = 3030+ex
+b[87] = 3100+ex
+b[88] = 3200+ex
+b[89] = 3180+ex
+b[90] = 3130+ex
+
+b[91] = 3430+ex
+b[92] = 3440+ex
+b[93] = 3600+ex
+b[94] = 3600+ex
+b[95] = 3530+ex
+
+b[96] = 3860+ex
+b[97] = 3830+ex
+b[98] = 4000+ex
+b[99] = 3930+ex
+b[100] = 3980+ex
 
 for i in V:
     if i not in D:
