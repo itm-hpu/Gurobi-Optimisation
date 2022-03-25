@@ -6,12 +6,6 @@ import gurobipy as gp
 psoition of pickup and delivery points
 The modification is needed since the original distance is represented by the time matrix
 '''
-# NS = np.array([25, 10])
-# NA = np.array([0, 0])
-# NB = np.array([10, 0])
-# NC = np.array([0, 10])
-# ND = np.array([10, 15])
-# NE = np.array([25, -10])
 NA=np.array([7.00,10.00])
 NB=np.array([7.20,6.00])
 NC=np.array([9.20,6.00])
@@ -30,9 +24,8 @@ descibe the task using the mapping of two loc[] and 'd' is se
 The modification is needed since the original position points are different.
 '''
 
-loc = {}
-d = {} #Set of demands, q in the model
-
+loc = {} #Set of locations for each node first pickups then deliveries
+q = {} #Set of demands, q in the model
 '''
 the definition of From Location
 '''
@@ -98,66 +91,66 @@ loc[50]=NE
 '''
 define the number of the each task, two nodes connected are defined as a task.
 '''
-d[0] = 0
-d[1] = 0
-d[2] = 1
-d[3] = 1
-d[4] = 1
-d[5] = 1
+q[0] = 0
+q[1] = 1
+q[2] = 1
+q[3] = 1
+q[4] = 1
+q[5] = 1
 
-d[6] = 1
-d[7] = 1
-d[8] = 1
-d[9] = 1
-d[10] = 1
+q[6] = 1
+q[7] = 1
+q[8] = 1
+q[9] = 1
+q[10] = 1
 
-d[11] = 1
-d[12] = 1
-d[13] = 1
-d[14] = 1
-d[15] = 1
+q[11] = 1
+q[12] = 1
+q[13] = 1
+q[14] = 1
+q[15] = 1
 
-d[16] = 1
-d[17] = 1
-d[18] = 1
-d[19] = 1
-d[20] = 1
+q[16] = 1
+q[17] = 1
+q[18] = 1
+q[19] = 1
+q[20] = 1
 
-d[21] = 1
-d[22] = 1
-d[23] = 1
-d[24] = 1
-d[25] = 1
+q[21] = 1
+q[22] = 1
+q[23] = 1
+q[24] = 1
+q[25] = 1
 
-d[26] = 1
-d[27] = 1
-d[28] = 1
-d[29] = 1
-d[30] = 1
+q[26] = 1
+q[27] = 1
+q[28] = 1
+q[29] = 1
+q[30] = 1
 
-d[31] = 1
-d[32] = 1
-d[33] = 1
-d[34] = 1
-d[35] = 1
+q[31] = 1
+q[32] = 1
+q[33] = 1
+q[34] = 1
+q[35] = 1
 
-d[36] = 1
-d[37] = 1
-d[38] = 1
-d[39] = 1
-d[40] = 1
+q[36] = 1
+q[37] = 1
+q[38] = 1
+q[39] = 1
+q[40] = 1
 
-d[41] = 1
-d[42] = 1
-d[43] = 1
-d[44] = 1
-d[45] = 1
+q[41] = 1
+q[42] = 1
+q[43] = 1
+q[44] = 1
+q[45] = 1
 
-d[46] = 1
-d[47] = 1
-d[48] = 1
-d[49] = 1
-d[50] = 1
+q[46] = 1
+q[47] = 1
+q[48] = 1
+q[49] = 1
+q[50] = 1
 
 '''
 the definition of To Location
@@ -226,232 +219,233 @@ loc[101] = NA
 '''
 define the number of the each task
 '''
-d[51] = -1
-d[52] = -1
-d[53] = -1
-d[54] = -1
-d[55] = -1
+q[51] = -1
+q[52] = -1
+q[53] = -1
+q[54] = -1
+q[55] = -1
 
-d[56] = -1
-d[57] = -1
-d[58] = -1
-d[59] = -1
-d[60] = -1
+q[56] = -1
+q[57] = -1
+q[58] = -1
+q[59] = -1
+q[60] = -1
 
-d[61] = -1
-d[62] = -1
-d[63] = -1
-d[64] = -1
-d[65] = -1
+q[61] = -1
+q[62] = -1
+q[63] = -1
+q[64] = -1
+q[65] = -1
 
-d[66] = -1
-d[67] = -1
-d[68] = -1
-d[69] = -1
-d[70] = -1
+q[66] = -1
+q[67] = -1
+q[68] = -1
+q[69] = -1
+q[70] = -1
 
-d[71] = -1
-d[72] = -1
-d[73] = -1
-d[74] = -1
-d[75] = -1
+q[71] = -1
+q[72] = -1
+q[73] = -1
+q[74] = -1
+q[75] = -1
 
-d[76] = -1
-d[77] = -1
-d[78] = -1
-d[79] = -1
-d[80] = -1
+q[76] = -1
+q[77] = -1
+q[78] = -1
+q[79] = -1
+q[80] = -1
 
-d[81] = -1
-d[82] = -1
-d[83] = -1
-d[84] = -1
-d[85] = -1
+q[81] = -1
+q[82] = -1
+q[83] = -1
+q[84] = -1
+q[85] = -1
 
-d[86] = -1
-d[87] = -1
-d[88] = -1
-d[89] = -1
-d[90] = -1
+q[86] = -1
+q[87] = -1
+q[88] = -1
+q[89] = -1
+q[90] = -1
 
-d[91] = -1
-d[92] = -1
-d[93] = -1
-d[94] = -1
-d[95] = -1
+q[91] = -1
+q[92] = -1
+q[93] = -1
+q[94] = -1
+q[95] = -1
 
-d[96] = -1
-d[97] = -1
-d[98] = -1
-d[99] = -1
-d[100] = -1
-d[101] = 0
+q[96] = -1
+q[97] = -1
+q[98] = -1
+q[99] = -1
+q[100] = -1
+q[101] = 0
 
 n = 50 #Number of jobs
 '''
 descibe the sets of the pickup and delivery points
 '''
-P = [i for i in range(1, n + 1)]  # Set of pickup nodes
-D = [i for i in range(n + 1, 2 * n + 1)]  # Set opf delivery nodes
-S = range(50)  # Set of scenarios
-V = [0] + P + D + [2 * n + 1]  # Set N from the paper
+P = [i for i in range(1, n + 1)] #Set of pickup nodes
+D = [i for i in range(n + 1, 2*n + 1)] #Set opf delivery nodes
+S = range(50) #Set of scenarios
+N = [0] + P + D + [2*n + 1] #Set N from the paper
 
-M = 1000  # Big M
+M = 1000 #Big M
 ex = 0
 '''
 descibe the time of the pickup points at cycles 1 to 10 
 '''
-a = {}  # Pickup times, e in the model from paper
-a[1] = 0
-a[2] = 80
-a[3] = 0
-a[4] = 100
-a[5] = 100
+e = {}  # Pickup times, e in the model from paper
+e[1] = 0
+e[2] = 80
+e[3] = 0
+e[4] = 100
+e[5] = 100
 
-a[6] = 400
-a[7] = 500
-a[8] = 400
-a[9] = 450
-a[10] = 500
+e[6] = 400
+e[7] = 500
+e[8] = 400
+e[9] = 450
+e[10] = 500
 
-a[11] = 820
-a[12] = 800
-a[13] = 800
-a[14] = 850
-a[15] = 950
+e[11] = 820
+e[12] = 800
+e[13] = 800
+e[14] = 850
+e[15] = 950
 
-a[16] = 1200
-a[17] = 1350
-a[18] = 1200
-a[19] = 1200
-a[20] = 1300
+e[16] = 1200
+e[17] = 1350
+e[18] = 1200
+e[19] = 1200
+e[20] = 1300
 
-a[21] = 1610
-a[22] = 1700
-a[23] = 1600
-a[24] = 1680
-a[25] = 1770
+e[21] = 1610
+e[22] = 1700
+e[23] = 1600
+e[24] = 1680
+e[25] = 1770
 
-a[26] = 2010
-a[27] = 2050
-a[28] = 2000
-a[29] = 2100
-a[30] = 2100
+e[26] = 2010
+e[27] = 2050
+e[28] = 2000
+e[29] = 2100
+e[30] = 2100
 
-a[31] = 2400
-a[32] = 2430
-a[33] = 2400
-a[34] = 2470
-a[35] = 2570
+e[31] = 2400
+e[32] = 2430
+e[33] = 2400
+e[34] = 2470
+e[35] = 2570
 
-a[36] = 2800
-a[37] = 2870
-a[38] = 2800
-a[39] = 2950
-a[40] = 2900
+e[36] = 2800
+e[37] = 2870
+e[38] = 2800
+e[39] = 2950
+e[40] = 2900
 
-a[41] = 3200
-a[42] = 3210
-a[43] = 3200
-a[44] = 3370
-a[45] = 3300
+e[41] = 3200
+e[42] = 3210
+e[43] = 3200
+e[44] = 3370
+e[45] = 3300
 
-a[46] = 3630
-a[47] = 3600
-a[48] = 3600
-a[49] = 3700
-a[50] = 3750
+e[46] = 3630
+e[47] = 3600
+e[48] = 3600
+e[49] = 3700
+e[50] = 3750
 
-for i in V:
+for i in N:
     if i not in P:
-        a[i] = 0
+        e[i] = 0
 
-b = {}  # Delivery times, l in the model from paper
+l = {}  # Delivery times, l in the model from paper
 '''
 descibe the time of the delivery points at cycles 1 to 10
 '''
-b[51] = 230+ex
-b[52] = 310+ex
-b[53] = 400+ex
-b[54] = 330+ex
-b[55] = 330+ex
+l[51] = 230+ex
+l[52] = 310+ex
+l[53] = 400+ex
+l[54] = 330+ex
+l[55] = 330+ex
 
-b[56] = 630+ex
-b[57] = 730+ex
-b[58] = 800+ex
-b[59] = 680+ex
-b[60] = 730+ex
+l[56] = 630+ex
+l[57] = 730+ex
+l[58] = 800+ex
+l[59] = 680+ex
+l[60] = 730+ex
 
-b[61] = 1050+ex
-b[62] = 1030+ex
-b[63] = 1200+ex
-b[64] = 1080+ex
-b[65] = 1180+ex
+l[61] = 1050+ex
+l[62] = 1030+ex
+l[63] = 1200+ex
+l[64] = 1080+ex
+l[65] = 1180+ex
 
-b[66] = 1430+ex
-b[67] = 1580+ex
-b[68] = 1600+ex
-b[69] = 1430+ex
-b[70] = 1530+ex
+l[66] = 1430+ex
+l[67] = 1580+ex
+l[68] = 1600+ex
+l[69] = 1430+ex
+l[70] = 1530+ex
 
-b[71] = 1840+ex
-b[72] = 1930+ex
-b[73] = 2000+ex
-b[74] = 1910+ex
-b[75] = 2000+ex
+l[71] = 1840+ex
+l[72] = 1930+ex
+l[73] = 2000+ex
+l[74] = 1910+ex
+l[75] = 2000+ex
 
-b[76] = 2240+ex
-b[77] = 2280+ex
-b[78] = 2400+ex
-b[79] = 2330+ex
-b[80] = 2330+ex
+l[76] = 2240+ex
+l[77] = 2280+ex
+l[78] = 2400+ex
+l[79] = 2330+ex
+l[80] = 2330+ex
 
-b[81] = 2630+ex
-b[82] = 2660+ex
-b[83] = 2800+ex
-b[84] = 2700+ex
-b[85] = 2800+ex
+l[81] = 2630+ex
+l[82] = 2660+ex
+l[83] = 2800+ex
+l[84] = 2700+ex
+l[85] = 2800+ex
 
-b[86] = 3030+ex
-b[87] = 3100+ex
-b[88] = 3200+ex
-b[89] = 3180+ex
-b[90] = 3130+ex
+l[86] = 3030+ex
+l[87] = 3100+ex
+l[88] = 3200+ex
+l[89] = 3180+ex
+l[90] = 3130+ex
 
-b[91] = 3430+ex
-b[92] = 3440+ex
-b[93] = 3600+ex
-b[94] = 3600+ex
-b[95] = 3530+ex
+l[91] = 3430+ex
+l[92] = 3440+ex
+l[93] = 3600+ex
+l[94] = 3600+ex
+l[95] = 3530+ex
 
-b[96] = 3860+ex
-b[97] = 3830+ex
-b[98] = 4000+ex
-b[99] = 3930+ex
-b[100] = 3980+ex
+l[96] = 3860+ex
+l[97] = 3830+ex
+l[98] = 4000+ex
+l[99] = 3930+ex
+l[100] = 3980+ex
 
-for i in V:
+
+for i in N:
     if i not in D:
-        b[i] = M
+        l[i] = M
 
-t = {}  # traveling times
+t = {} #traveling times
 ts = {}
-c = {}  # distance "costs"
-v = 1.5  # the speed of the AGV
+c = {} #distance "costs"
+v = 1.5 #the speed of the AGV
 mean = 1
 var = 0.5
 setuptime = 0
-for i in V:
-    for j in V:
-        c[i, j] = round(np.linalg.norm(loc[i] - loc[j], 1), 2)
+for i in N:
+    for j in N:
+        c[i,j] = round(np.linalg.norm(loc[i] - loc[j], 1), 2)
         for s in S:
-            aux = round(max(0, np.random.normal(mean, var)) * c[i, j] / v, 2)
-            # print(c[i,j]/v, aux)
-            ts[i, j, s] = max(.1, aux)
-        t[i, j] = max(0.1, round(c[i, j] / v, 2) + setuptime)  # np.mean([ts[i,j,s] for s in S])
-        # print(t[i,j], np.mean([ts[i,j,s] for s in S]))
+            aux = round(max(0, np.random.normal(mean, var)) * c[i,j] / v, 2)
+            #print(c[i,j]/v, aux)
+            ts[i,j,s] = max(.1, aux)
+        t[i,j] = max(0.1, round(c[i,j]/v,2) + setuptime)#np.mean([ts[i,j,s] for s in S])
+        #print(t[i,j], np.mean([ts[i,j,s] for s in S]))
 
-K = range(2)  # Set of AGV available
+K = range(2) #Set of AGV available
 Cap = {}
 for k in K:
     Cap[k] = 1
@@ -459,43 +453,43 @@ for k in K:
 Using gurobi optimisation for the output the optimal results
 '''
 
-m = gp.Model()
-m.Params.MIPFocus = 1
-x = m.addVars(K, V, V, vtype = 'B', name = 'x')
-w = m.addVars(K, V, vtype = 'C', name = 'w')
-q = m.addVars(K, V, vtype = 'C', name = 'q')
-ms = m.addVars(V, name = 'slack')
+m = gp.Model() #Declaring model in Gurobi
+m.Params.MIPFocus = 1 #Changing focus on the solver to integer
+x = m.addVars(K, N, N, vtype = 'B', name = 'x') #x variables directs which AGV takes which job
+B = m.addVars(K, N, vtype = 'C', name = 'w') #B variables are the time stamps
+Q = m.addVars(K, N, vtype = 'C', name = 'q') #Q variables are the capacity conditions
+ms = m.addVars(N, name = 'slack') #Slack variables for feasibility
 
-m.addConstrs((gp.quicksum(x[k, i, j] for k in K for j in V) == 1
+m.addConstrs((gp.quicksum(x[k, i, j] for k in K for j in N) == 1
              for i in P), 'sources')
-m.addConstrs((gp.quicksum(x[k, i, j] for j in V) - gp.quicksum(x[k, n+i, j] for j in V) == 0
+m.addConstrs((gp.quicksum(x[k, i, j] for j in N) - gp.quicksum(x[k, n+i, j] for j in N) == 0
              for i in P for k in K), 'nodes1')
-m.addConstrs((gp.quicksum(x[k, j, i] for j in V) - gp.quicksum(x[k, i, j] for j in V) == 0
+m.addConstrs((gp.quicksum(x[k, j, i] for j in N) - gp.quicksum(x[k, i, j] for j in N) == 0
              for i in (P + D) for k in K), 'nodes2')
-m.addConstrs((gp.quicksum(x[k, 0, j] for j in V) == 1
+m.addConstrs((gp.quicksum(x[k, 0, j] for j in N) == 1
              for k in K), 'origin')
-m.addConstrs((gp.quicksum(x[k, i, 2*n + 1] for i in V) == 1
+m.addConstrs((gp.quicksum(x[k, i, 2*n + 1] for i in N) == 1
              for k in K), 'terminal')
-m.addConstrs((w[k, j] >= w[k, i] + t[i,j] - M * (1 - x[k, i, j])
-             for i in V for j in V for k in K), 'job_times1')
-m.addConstrs((q[k, j] >= q[k, i] + d[j] - M * (1 - x[k, i, j])
-             for i in V for j in V for k in K), 'job_vols1')
-m.addConstrs((w[k, i] + t[i, n+i] <= w[k, n+i]
+m.addConstrs((B[k, j] >= B[k, i] + t[i,j] - M * (1 - x[k, i, j])
+             for i in N for j in N for k in K), 'job_times1')
+m.addConstrs((Q[k, j] >= Q[k, i] + q[j] - M * (1 - x[k, i, j])
+             for i in N for j in N for k in K), 'job_vols1')
+m.addConstrs((B[k, i] + t[i, n+i] <= B[k, n+i]
              for i in P for k in K), 'job_prec')
-m.addConstrs((w[k, i] >= a[i] - ms[i]
-             for i in V for k in K), 'start_time')
-m.addConstrs((w[k, i] <= b[i] + ms[i]
-             for i in V for k in K), 'finish_time')
-m.addConstrs((q[k, i] >= max(0, d[j])
-             for i in V for k in K), 'start_cap')
-m.addConstrs((q[k, i] <= min(Cap[k], Cap[k] + d[j])
-             for i in V for k in K), 'finish_cap')
-m.setObjective(gp.quicksum(c[i,j] * x[k,i,j] for k in K for i in V for j in V)
-             + 1/M * (gp.quicksum(w) + gp.quicksum(q)) + M * gp.quicksum(ms))
+m.addConstrs((B[k, i] >= e[i] - ms[i]
+             for i in N for k in K), 'start_time')
+m.addConstrs((B[k, i] <= l[i] + ms[i]
+             for i in N for k in K), 'finish_time')
+m.addConstrs((Q[k, i] >= max(0, q[j])
+             for i in N for k in K), 'start_cap')
+m.addConstrs((Q[k, i] <= min(Cap[k], Cap[k] + q[j])
+             for i in N for k in K), 'finish_cap')
+m.setObjective(gp.quicksum(c[i,j] * x[k,i,j] for k in K for i in N for j in N)
+             + 1/M * (gp.quicksum(B) + gp.quicksum(Q)) + M * gp.quicksum(ms))
 
 m.write('model-pdptw-det.lp')
-
 m.optimize()
+
 m.write('bots-det_%s_%s.sol' % (n, len(K)))
 for i in gp.tuplelist(ms):
     if round(ms[i].X, 0) > 0:
@@ -506,143 +500,13 @@ for k in K:
     i = 0
     aux = 0
     while aux < (2*n + 1):
-        for j in V:
+        for j in N:
             if x[k, i, j].x > 0:
                 aux = j
-        print(k, i, aux, round(w[k, i].X,2), round(w[k, aux].X,2))
+        print(k, i, aux, round(B[k, i].X,2), round(B[k, aux].X,2))
         order[k].append(aux)
         if aux == i:
             aux = 2*n+1
         else:
             i = aux
     #order[k].append(0)
-fails = {}
-import copy
-orderd = copy.deepcopy(order)
-for k in K:
-    fails[k] = []
-    if len(order[k]) > 2:
-        for s in range(1000):
-            true_w = 0
-            for i,r in enumerate(order[k]):
-                if r in P:
-                    true_w = max(true_w, a[r])
-                    #print(k, r, a[r], true_w)
-                    if a[r] > true_w:
-                        fails[k].append(1)
-                    else:
-                        fails[k].append(0)
-                if r in D:
-                    aux = round(max(0, np.random.normal(mean, var)) * c[i,j] / v, 2)
-                    true_w += round(aux , 2)
-                    #print(k, r, b[r], true_w, aux, order[k][i-1], c[order[k][i-1], r])
-                    if b[r] < true_w:
-                        fails[k].append(1)
-                    else:
-                        fails[k].append(0)
-for k in K:
-    if len(fails[k]) > 0:
-        print(k, np.mean(fails[k]))
-    else:
-        print(k, 0)
-xdet = {}
-for i in gp.tuplelist(x):
-    xdet[i] = int(x[i].X)
-
-alpha = 0
-m = gp.Model()
-x = m.addVars(K, V, V, vtype='B', name='x')
-w = m.addVars(K, V, S, vtype='C', name='w')
-q = m.addVars(K, V, vtype='C', name='q')
-z = m.addVars(S, vtype='B', name='z')
-ms = m.addVar(name='makespan')
-
-m.addConstrs((gp.quicksum(x[k, i, j] for k in K for j in V) == 1
-              for i in P), 'sources')
-m.addConstrs((gp.quicksum(x[k, i, j] for j in V) - gp.quicksum(x[k, n + i, j] for j in V) == 0
-              for i in P for k in K), 'nodes1')
-m.addConstrs((gp.quicksum(x[k, j, i] for j in V) - gp.quicksum(x[k, i, j] for j in V) == 0
-              for i in (P + D) for k in K), 'nodes2')
-m.addConstrs((gp.quicksum(x[k, 0, j] for j in V) == 1
-              for k in K), 'origin')
-m.addConstrs((gp.quicksum(x[k, i, 2 * n + 1] for i in V) == 1
-              for k in K), 'terminal')
-m.addConstrs((w[k, j, s] >= w[k, i, s] + ts[i, j, s] - M * (1 - x[k, i, j]) - M * z[s]
-              for i in V for j in V for k in K for s in S), 'job_times1')
-m.addConstrs((q[k, j] >= q[k, i] + d[j] - M * (1 - x[k, i, j])
-              for i in V for j in V for k in K), 'job_vols1')
-m.addConstrs((w[k, i, s] + ts[i, n + i, s] <= w[k, n + i, s] + M * z[s]
-              for i in P for k in K for s in S), 'job_prec')
-m.addConstrs((w[k, i, s] >= a[i] - a[i] * z[s] - ms
-              for i in P for k in K for s in S), 'start_time')
-m.addConstrs((w[k, i, s] <= b[i] + M * z[s] + ms
-              for i in D for k in K for s in S), 'finish_time')
-m.addConstrs((q[k, i] >= max(0, d[j])
-              for i in P for k in K), 'start_cap')
-m.addConstrs((q[k, i] <= min(Cap[k], Cap[k] + d[j])
-              for i in P for k in K), 'finish_cap')
-# m.addConstrs((w[k, i, s] <= ms[s] + M * z[s]
-#             for k in K for i in V for s in S), 'max_makespan')
-m.addConstr(gp.quicksum(z) <= alpha * len(S))
-m.setObjective(gp.quicksum(c[i, j] * x[k, i, j] for k in K for i in V for j in V) + 1 / M * (
-            gp.quicksum(w) + gp.quicksum(q)) + M * ms)
-# m.addConstrs((gp.quicksum(x[k, i, j] for i in P for j in V) <= 1.2 * np.ceil(n/len(K))
-#             for k in K), 'work_load')
-
-m.write('model-pdptw-cc.lp')
-for i in gp.tuplelist(x):
-    x[i].start = xdet[i]
-m.optimize()
-m.write('bots-cc_%s_%s.sol' % (n, len(K)))
-#print(1/len(S) * sum(ms[i].X for i in gp.tuplelist(ms)))
-order = {}
-for k in K:
-    order[k] = [0]
-    i = 0
-    aux = 0
-    while aux < (2*n + 1):
-        for j in V:
-            if x[k, i, j].x > 0:
-                aux = j
-        print(k, i, aux)
-        order[k].append(aux)
-        if aux == i:
-            aux = 2*n+1
-        else:
-            i = aux
-    #order[k].append(0)
-fails = {}
-for k in K:
-    fails[k] = []
-    if len(order[k]) > 2:
-        for s in range(1000):
-            true_w = 0
-            for i,r in enumerate(order[k]):
-                if r in P:
-                    true_w = max(true_w, a[r])
-                    #print(k, r, a[r], true_w)
-                    if a[r] > true_w:
-                        fails[k].append(1)
-                    else:
-                        fails[k].append(0)
-                if r in D:
-                    aux = round(max(0, np.random.normal(mean, var)) * c[i,j] / v, 2)
-                    true_w += round(aux , 2)
-                    #print(k, r, b[r], true_w)
-                    if b[r] < true_w:
-                        fails[k].append(1)
-                    else:
-                        fails[k].append(0)
-for k in K:
-    if len(fails[k]) > 0:
-        print(k, np.mean(fails[k]))
-    else:
-        print(k, 0)
-for k in K:
-    print(orderd)
-print(gp.quicksum(c[i,j] * xdet[k,i,j] for k in K for i in V for j in V))
-print("----------------------------")
-for k in K:
-    print(order)
-print(gp.quicksum(c[i,j] * x[k,i,j].X for k in K for i in V for j in V))
-
